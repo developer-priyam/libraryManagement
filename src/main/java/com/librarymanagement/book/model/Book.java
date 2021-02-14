@@ -17,16 +17,8 @@ public class Book {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public int getAvailableCopies() {
@@ -40,9 +32,4 @@ public class Book {
 	public int getTotalCopies() {
 		return totalCopies;
 	}
-
-	public void setTotalCopies(int totalCopies) {
-		this.totalCopies = totalCopies;
-	}
-	
 }

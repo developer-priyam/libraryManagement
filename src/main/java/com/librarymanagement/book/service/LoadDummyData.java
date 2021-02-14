@@ -1,22 +1,20 @@
-package com.librarymanagement.book.handler;
+package com.librarymanagement.book.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.librarymanagement.book.model.Book;
 import com.librarymanagement.book.model.User;
 import com.librarymanagement.book.repository.DummyLibraryDataStore;
 
-@Component
+@Service
 public class LoadDummyData implements CommandLineRunner {
 	
-	@Autowired
-	private DummyLibraryDataStore dataStore;
+	private DummyLibraryDataStore dataStore = DummyLibraryDataStore.getInstance();
 	
 	@Override
 	public void run(String... args) throws Exception {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,13 @@ import com.librarymanagement.book.repository.DummyLibraryDataStore;
 @Service
 public class LoadDummyData implements CommandLineRunner {
 	
+	private static final Logger logger = LoggerFactory.getLogger(LoadDummyData.class);
+	
 	private DummyLibraryDataStore dataStore = DummyLibraryDataStore.getInstance();
 	
 	@Override
 	public void run(String... args) throws Exception {
+		logger.info("Loading Dummy Data after App start complete");
 		loadBooksData();
 		loadUserData();
 	}
@@ -45,8 +50,6 @@ public class LoadDummyData implements CommandLineRunner {
 		bookMap.put(book3.getName(), book3);
 		bookMap.put(book2.getName(), book2);
 		bookMap.put(book1.getName(), book1);
-		System.out.println(dataStore);
-		System.out.println(bookMap);
 		dataStore.setDummyBookData(bookMap);
 	}
 

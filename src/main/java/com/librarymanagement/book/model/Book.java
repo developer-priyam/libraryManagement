@@ -32,4 +32,10 @@ public class Book {
 	public int getTotalCopies() {
 		return totalCopies;
 	}
+
+	@Override
+	public String toString() {
+		return "Book [name=" + name + ", id=" + id + ", availableCopies=" + availableCopies + ", totalCopies="
+				+ totalCopies + "]";
+	}
 }

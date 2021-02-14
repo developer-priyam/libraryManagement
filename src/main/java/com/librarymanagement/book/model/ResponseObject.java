@@ -26,4 +26,8 @@ public class ResponseObject {
 		return status;
 	}
 
+	@Override
+	public String toString() {
+		return "ResponseObject [user=" + user + ", book=" + book + ", status=" + status + "]";
+	}
 }

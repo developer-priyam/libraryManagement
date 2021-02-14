@@ -83,6 +83,6 @@ public class BookServiceTest {
 	@Test
 	public void testReturnBook() throws Exception {
 		Map<String, Book> bookMap = bookService.borrowReturnBook(issuedBooks, "test-book", "return");
-		assertEquals(12, bookMap.get("test-book").getAvailableCopies());
+		assertEquals(11, bookMap.get("test-book").getAvailableCopies());
 	}
 }

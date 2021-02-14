@@ -22,4 +22,9 @@ public class LibManageReqObj {
 	public void setAction(String action) {
 		this.action = action;
 	}
+	@Override
+	public String toString() {
+		return "LibManageReqObj [username=" + username + ", bookname=" + bookname + ", action=" + action + "]";
+	}
+	
 }

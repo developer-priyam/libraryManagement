@@ -1,15 +1,22 @@
 <h2> Books in Library </h2>
-<div class="book-child" *ngFor="let book of bookList">
-    <div class="book-cover">
-        <div class="book-cover-text"> {{ book.name }}</div> 
+
+<div *ngIf="bookList.length">
+    <div class="book-child" *ngFor="let book of bookList">
+        <div class="book-cover">
+            <div class="book-cover-text"> {{ book.name }}</div> 
+        </div>
+        <div class="book-info info-left">
+            Total Copies : {{ book.totalCopies }}
+        </div>
+        <div class="book-info info-right">
+            Available Copies :  {{ book.availableCopies }}
+        </div>
+        <p class="issue-book">
+            <button (click)="issueBookFromLibrary(book.name)" mat-raised-button color="primary" [disabled]="book.availableCopies == 1 || issuedBooks.length == 2">Issue  </button>
+        </p>
     </div>
-    <div class="book-info info-left">
-        Total Copies : {{ book.totalCopies }}
-    </div>
-    <div class="book-info info-right">
-        Available Copies :  {{ book.availableCopies }}
-    </div>
-    <p class="issue-book">
-        <button (click)="issueBookFromLibrary(book.name)" mat-raised-button color="primary" [disabled]="book.availableCopies == 1 || issuedBooks.length == 2">Issue  </button>
-    </p>
+</div>
+
+<div class="no-data" *ngIf="!bookList.length">
+    No Books Present in Library
 </div>

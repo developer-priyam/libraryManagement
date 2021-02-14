@@ -26,20 +26,24 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit(): void { }
 
   loadUserDetails(): void {
-    const obj = {
-      username: this.usernameControl.value
-    }
-    this.service.getUser(obj)
-    .subscribe(
-      (response: User) => {
-        if(response.id > -1) {
-          this.issuedBooks = response.issuedBooks;
-          this.userLoaded = true;
-          this.service.storeUserName(response.name);
-          this.showMesage('user Loaded successfully!!');
-        }
+    if(this.usernameControl.value !== null) {
+      const obj = {
+        username: this.usernameControl.value
       }
-    )
+      this.service.getUser(obj)
+      .subscribe(
+        (response: User) => {
+          if(response.id > -1) {
+            this.issuedBooks = response.issuedBooks;
+            this.userLoaded = true;
+            this.service.storeUserName(response.name);
+            this.showMesage('user Loaded successfully!!');
+          }
+        }
+      )
+    } else {
+      this.showMesage('Enter the username first');
+    }
   }
   
   returnBookToLibrary(bookId: number): void {

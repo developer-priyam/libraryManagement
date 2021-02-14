@@ -1,1 +1,21 @@
-<p>user-details works!</p>
+<h2> Issued Books </h2>
+<div *ngIf="!userLoaded">
+    <mat-form-field class="example-full-width">
+        <mat-label>User Name</mat-label>
+        <input matInput [formControl]="usernameControl" placeholder="enter username">
+    </mat-form-field>
+    <button (click)="loadUserDetails()" mat-raised-button color="primary">Load User</button>
+</div>
+<div *ngIf="userLoaded && issuedBooks.length">
+    <div class="book-child" *ngFor="let bookID of issuedBooks">
+        <div class="book-cover">
+            <div class="book-cover-text"> {{ bookID | convertToName }}</div> 
+        </div>
+        <p class="issue-book">
+            <button (click)="returnBookToLibrary(bookID)" mat-raised-button color="warn">Return  </button>
+        </p>
+    </div>
+</div>
+<div *ngIf="userLoaded && !issuedBooks.length">
+    No Books Issued till now
+</div>

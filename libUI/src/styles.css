@@ -1,1 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body {  background-color: #eaeaead2; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+h2 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.book-child {
+    width: 400px;
+    height: 400px;
+    margin: 18px;
+    border: 1px solid #333;
+    display: inline-block;
+    background-color: #FFF;
+    min-width: 155px;
+}
+
+.book-cover {
+    background-color: #9ec9d6;
+    height: 300px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.book-cover-text {
+    padding: 130px 0px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.book-info {
+    margin: 5px 0px;
+    font-weight: bold;
+    
+}
+
+.info-right {
+    color: blue;
+    width: 190px;
+    text-align: right;
+    padding: 5px;
+    display: inline-block;
+}
+
+.info-left {
+    color: green;
+    width: 190px;
+    text-align: left;
+    padding: 5px;
+    display: inline-block;
+}
+
+.issue-book {
+    text-align: center;
+    padding: 10px;
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Book } from 'src/app/models/Book.model';
 import { ResponseObject } from 'src/app/models/response-object.model';
 import { User } from 'src/app/models/user.model';
@@ -16,7 +17,7 @@ export class UserDetailsComponent implements OnInit {
   userLoaded = false;
   usernameControl = new FormControl(null, Validators.required);
 
-  constructor(private service: LibServiceService) { 
+  constructor(private service: LibServiceService, private alertBar: MatSnackBar) { 
     this.service.userUpdateEvent.subscribe(
       (user: User) => this.issuedBooks = user.issuedBooks
     )
@@ -35,13 +36,14 @@ export class UserDetailsComponent implements OnInit {
           this.issuedBooks = response.issuedBooks;
           this.userLoaded = true;
           this.service.storeUserName(response.name);
+          this.showMesage('user Loaded successfully!!');
         }
       }
     )
   }
   
   returnBookToLibrary(bookId: number): void {
-    const bookname = this.service.getStroedBookList().find((book: Book) => book.id = bookId)?.name;
+    const bookname = this.service.getStroedBookList().find((book: Book) => book.id === bookId)?.name;
     if(bookname !== undefined) {
       const reqObj = {
         username: this.service.getUserName(),
@@ -53,11 +55,22 @@ export class UserDetailsComponent implements OnInit {
         (response: ResponseObject) => {
           this.service.storeBookList(response.book);
           this.issuedBooks = response.user.issuedBooks;
-          console.log(response.status);
+          this.service.userUpdateEvent.emit(response.user);
+          this.showMesage('Book Return Successful, response status : ' + response.status);
         }
       )
     }
     
+  }
+
+  showMesage(message: string): void {
+    this.alertBar.open(message, 'X',
+      {
+        duration: 2000,
+        horizontalPosition: 'end',
+        verticalPosition: 'top',
+      }
+    );
   }
 
 }

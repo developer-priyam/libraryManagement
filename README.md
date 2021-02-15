@@ -39,10 +39,10 @@ public updateUserDetails(String username, String bookname, String action) - upda
 
 ### Exception Handling using Custom Exceptions
 ControllerAdvice and ExceptionHandler is used to handle and translate custom exceptions to http response
-DuplicateCopyIssueException
-IssueLimitReachedException
-NotEnoughCopyException
-UserNotFoundException
+1. DuplicateCopyIssueException
+2. IssueLimitReachedException
+3. NotEnoughCopyException
+4. UserNotFoundException
 
 ## Angular
 This has following components

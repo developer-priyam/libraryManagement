@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.librarymanagement.book.constant.LibraryProperties;
+import com.librarymanagement.book.exception.UserNotFoundException;
 import com.librarymanagement.book.model.Book;
 import com.librarymanagement.book.model.User;
 import com.librarymanagement.book.repository.DummyLibraryDataStore;
@@ -56,7 +57,7 @@ public class UserServiceTest {
 		assertEquals("test-user", user.getName());
 	}
 	
-	@Test(expected=Exception.class)
+	@Test(expected=UserNotFoundException.class)
 	public void testGetUserNotFoundException() throws Exception {
 		service.getUserDetails("test-user1");
 	}

@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.librarymanagement.book.constant.LibraryProperties;
+import com.librarymanagement.book.exception.DuplicateCopyIssueException;
+import com.librarymanagement.book.exception.IssueLimitReachedException;
+import com.librarymanagement.book.exception.NotEnoughCopyException;
 import com.librarymanagement.book.model.Book;
 import com.librarymanagement.book.repository.DummyLibraryDataStore;
 
@@ -32,40 +35,39 @@ public class BookService {
 		return bookMap;
 	}
 	
-	public Map<String, Book> borrowReturnBook(List<Integer> issuedBooks, String bookname, String action) throws Exception {
+	public void borrowReturnBook(List<Integer> issuedBooks, String bookname, String action) throws Exception {
 		logger.info("Lib operation request started with action : {}, bookname : {}, and Existing size of issued books : ()", action, bookname, issuedBooks.size());
-		return updateBookMap(issuedBooks, getBookMap(), bookname, action);
+		updateBookMap(issuedBooks, getBookMap(), bookname, action);
 	}
 	
-	private Map<String, Book> updateBookMap(List<Integer> issuedBooks, Map<String, Book> bookMap, String bookname, String action) throws Exception {
+	private void updateBookMap(List<Integer> issuedBooks, Map<String, Book> bookMap, String bookname, String action) throws Exception {
 		Book book = bookMap.get(bookname);
 		int availableCount = book.getAvailableCopies();
+		
 		logger.info("Number of copies of book : {} available in Librarry : {}", bookname, availableCount);
+		
 		if (action.equalsIgnoreCase(properties.getRETURN())) {
+			
 			availableCount++;
 			logger.info("incrementing book copy count : {}, as action request is :{}", availableCount, action);
+			
+		} else if (issuedBooks.size() >= 2) {
+			throw new IssueLimitReachedException("Cannot issue new books, Book issue limit reached");
+		} else if (issuedBooks.contains(book.getId())) {
+			throw new DuplicateCopyIssueException("Cannot issue 2 copies of same book");
+		} else if(availableCount == 1) {
+			throw new NotEnoughCopyException("Not enough copies of the book available");
 		} else {
-			if (!issuedBooks.contains(book.getId())) {
-				if(availableCount > 1) {
-					logger.info("More than copy available for book : {} in library. Count is : {}. Performig action : {}", bookname, availableCount, action); 
-					if(properties.getBORROW().equalsIgnoreCase(action) && issuedBooks.size() < 2) {
-						availableCount--;
-						logger.info("Decrementing available book count : {}", availableCount);
-					} else if(properties.getBORROW().equalsIgnoreCase(action) && issuedBooks.size() >= 2) {
-						throw new Exception("Cannot issue new books, Book issue limit reached");
-					}
-					logger.info("Number of copies : {} after performing : {} for book : {}", availableCount, action, bookname); 
-				} else {
-					throw new Exception("Not enough copies of the book available");
-				}
-			} else {
-				throw new Exception("Cannot issue 2 copies of same book");
-			}
+			
+			logger.info("More than 1 copy available for book : {} in library. Count is : {}. Performig action : {}", bookname, availableCount, action); 
+			availableCount--;
+			
+			logger.info("Decrementing available book count : {}", availableCount);
 		}
+		logger.info("Number of copies : {} after performing : {} for book : {}", availableCount, action, bookname);
 		book.setAvailableCopies(availableCount);
-		logger.info("book : {}", book); 
+		logger.info("On Action : {} book : {}", action, book); 
 		bookMap.put(bookname, book);
-		return bookMap;
+		datastore.setDummyBookData(bookMap);
 	}
-	
 }

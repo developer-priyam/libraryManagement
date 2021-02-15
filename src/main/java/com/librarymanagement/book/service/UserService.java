@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.librarymanagement.book.constant.LibraryProperties;
+import com.librarymanagement.book.exception.UserNotFoundException;
 import com.librarymanagement.book.model.User;
 import com.librarymanagement.book.repository.DummyLibraryDataStore;
 
@@ -31,7 +32,7 @@ public class UserService {
 		Map<String, User> userMap = datastore.getDummyUserData();
 		User user = userMap.get(username);
 		logger.info("User Object : {} for username : {}", user, username);
-		if(user == null) throw new Exception("User not found");
+		if(user == null) throw new UserNotFoundException("User not found");
 		return user;
 	}
 	

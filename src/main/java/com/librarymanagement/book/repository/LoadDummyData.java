@@ -1,4 +1,4 @@
-package com.librarymanagement.book.service;
+package com.librarymanagement.book.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,13 +7,12 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.librarymanagement.book.model.Book;
 import com.librarymanagement.book.model.User;
-import com.librarymanagement.book.repository.DummyLibraryDataStore;
 
-@Service
+@Component
 public class LoadDummyData implements CommandLineRunner {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoadDummyData.class);

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import com.librarymanagement.book.repository.DummyLibraryDataStore;
+import com.librarymanagement.book.repository.LoadDummyData;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoadDummyDataTest {

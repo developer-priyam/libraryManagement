@@ -10,7 +10,7 @@ export class ConvertToNamePipe implements PipeTransform {
   constructor(private service: LibServiceService) {}
 
   transform(value: number): string | undefined {
-    const bookname = this.service.getStroedBookList().find((book: Book) => book.id == value)?.name;
+    const bookname = this.service.getStroedBookList().find((book: Book) => book.id === value)?.name;
     return bookname;
   }
 

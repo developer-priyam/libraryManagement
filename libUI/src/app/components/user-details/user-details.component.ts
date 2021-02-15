@@ -17,20 +17,22 @@ export class UserDetailsComponent implements OnInit {
   userLoaded = false;
   usernameControl = new FormControl(null, Validators.required);
 
-  constructor(private service: LibServiceService, private alertBar: MatSnackBar) { 
+  constructor(private service: LibServiceService, private alertBar: MatSnackBar) {
     this.service.userUpdateEvent.subscribe(
-      (user: User) => this.issuedBooks = user.issuedBooks
-    )
+      (user: User) =>  {
+        this.issuedBooks = user.issuedBooks;
+      }
+    );
   }
 
   ngOnInit(): void { }
 
   loadUserDetails(): void {
-    if(this.usernameControl.value !== null) {
+    if (this.usernameControl.value !== null) {
       this.service.getUser(this.usernameControl.value)
       .subscribe(
         (response: User) => {
-          if(response.id > -1) {
+          if (response.id > -1) {
             this.issuedBooks = response.issuedBooks;
             this.userLoaded = true;
             this.service.storeUserName(response.name);
@@ -45,7 +47,7 @@ export class UserDetailsComponent implements OnInit {
       this.showMesage('Enter the username first');
     }
   }
-  
+
   returnBookToLibrary(bookId: number): void {
     const bookname = this.service.getStroedBookList().find((book: Book) => book.id === bookId)?.name;
     if (bookname !== undefined) {

@@ -14,16 +14,18 @@ export class BookDetailComponent implements OnInit {
   bookList: Book[] = [];
   issuedBooks: number[] = [];
 
-  constructor(private service: LibServiceService, private alertBar: MatSnackBar) { 
+  constructor(private service: LibServiceService, private alertBar: MatSnackBar) {
     this.service.bookListUpdateEvent.subscribe(
-      (books: Book[]) => this.bookList = books
-    )
+      (books: Book[]) => {
+        this.bookList = books;
+      }
+    );
     this.service.userUpdateEvent.subscribe(
       (user: User) => {
         this.issuedBooks = user.issuedBooks;
         this.getBooks();
       }
-    )
+    );
   }
 
   ngOnInit(): void {
@@ -35,7 +37,7 @@ export class BookDetailComponent implements OnInit {
     this.service.getBookList()
     .subscribe(
       (response: Book[]) => {
-        this.bookList = response
+        this.bookList = response;
         this.service.storeBookList(this.bookList);
       },
       (error: HttpErrorResponse) => {
@@ -46,7 +48,7 @@ export class BookDetailComponent implements OnInit {
 
   issueBookFromLibrary(bookname: string): void {
     const username = this.service.getUserName();
-    if(username !== '') {
+    if (username !== '') {
       this.service.libManage('borrow', this.service.getUserName(), bookname)
       .subscribe(
         (response: User) => {
@@ -61,7 +63,7 @@ export class BookDetailComponent implements OnInit {
     } else {
       this.showMesage('Please load the user details first');
     }
-   
+
   }
 
   showMesage(message: string): void {

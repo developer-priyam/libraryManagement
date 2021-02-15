@@ -1,8 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Book } from 'src/app/models/Book.model';
-import { ResponseObject } from 'src/app/models/response-object.model';
 import { User } from 'src/app/models/user.model';
 import { LibServiceService } from 'src/app/service/lib-service.service';
 
@@ -27,10 +27,7 @@ export class UserDetailsComponent implements OnInit {
 
   loadUserDetails(): void {
     if(this.usernameControl.value !== null) {
-      const obj = {
-        username: this.usernameControl.value
-      }
-      this.service.getUser(obj)
+      this.service.getUser(this.usernameControl.value)
       .subscribe(
         (response: User) => {
           if(response.id > -1) {
@@ -39,8 +36,11 @@ export class UserDetailsComponent implements OnInit {
             this.service.storeUserName(response.name);
             this.showMesage('user Loaded successfully!!');
           }
+        },
+        (error: HttpErrorResponse) => {
+          this.showMesage(error.error);
         }
-      )
+      );
     } else {
       this.showMesage('Enter the username first');
     }
@@ -48,23 +48,21 @@ export class UserDetailsComponent implements OnInit {
   
   returnBookToLibrary(bookId: number): void {
     const bookname = this.service.getStroedBookList().find((book: Book) => book.id === bookId)?.name;
-    if(bookname !== undefined) {
-      const reqObj = {
-        username: this.service.getUserName(),
-        bookname,
-        action: 'return'
-      }
-      this.service.libManage(reqObj)
+    if (bookname !== undefined) {
+      this.service.libManage('return', this.service.getUserName(), bookname)
       .subscribe(
-        (response: ResponseObject) => {
-          this.service.storeBookList(response.book);
-          this.issuedBooks = response.user.issuedBooks;
-          this.service.userUpdateEvent.emit(response.user);
-          this.showMesage('Book Return Successful, response status : ' + response.status);
+        (response: User) => {
+          this.issuedBooks = response.issuedBooks;
+          this.service.userUpdateEvent.emit(response);
+          this.showMesage('Book Return Successful');
+        },
+        (error: HttpErrorResponse) => {
+          this.showMesage(error.error);
         }
-      )
+      );
+    } else {
+      this.showMesage(' Book name is undefined');
     }
-    
   }
 
   showMesage(message: string): void {

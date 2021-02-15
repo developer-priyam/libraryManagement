@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Book } from '../models/Book.model';
-import { ResponseObject } from '../models/response-object.model';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -24,12 +23,12 @@ export class LibServiceService {
     return this.http.get<Book[]>(`${this.serviceBaseURL}${this.getBooksURI}`);
   }
 
-  getUser(username: {username: string}): Observable<User> {
-    return this.http.post<User>(`${this.serviceBaseURL}${this.getUserURI}`, username);
+  getUser(username: string): Observable<User> {
+    return this.http.post<User>(`${this.serviceBaseURL}${this.getUserURI}/${username}`, {});
   }
 
-  libManage(libOps: {username: string, bookname: string, action: string}): Observable<ResponseObject> {
-    return this.http.post<ResponseObject>(`${this.serviceBaseURL}${this.libeOperationURI}`, libOps);
+  libManage(action: string, username: string, bookname: string): Observable<User> {
+    return this.http.post<User>(`${this.serviceBaseURL}${this.libeOperationURI}/${action}/${username}/${bookname}`, {});
   }
 
   storeUserName(username: string): void {

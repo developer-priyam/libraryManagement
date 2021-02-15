@@ -2,6 +2,8 @@
 
 # Java - Library Managment Service (Sping book) - 
 Java 8
+## Architecture
+![alt text](https://github.com/developer-priyam/libraryManagement/blob/master/Library managment service architecture.jpeg?raw=true)
 
 # Angular - Library Managment UI
 Angular 11

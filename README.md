@@ -37,6 +37,13 @@ public updateUserDetails(String username, String bookname, String action) - upda
 #### DummyDataLoader - It implements ommandLineRunner and loads dummy data on application start.
 #### DummyLibraryDataStore - It has static map type member variable for Book and USer data. This in-memory data is used for all the operations.
 
+### Exception Handling using Custom Exceptions
+ControllerAdvice and ExceptionHandler is used to handle and translate custom exceptions to http response
+DuplicateCopyIssueException
+IssueLimitReachedException
+NotEnoughCopyException
+UserNotFoundException
+
 ## Angular
 This has following components
 ### App component
@@ -50,3 +57,6 @@ This has following components
 ## Angular - Test cases are written in karma
 
 
+## Ports:
+Java app start at 8080 - http://localhost:8080
+Angular app starts at 4200 - http://localhost:4200

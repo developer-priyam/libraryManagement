@@ -20,6 +20,7 @@ import com.librarymanagement.book.exception.UserNotFoundException;
 import com.librarymanagement.book.model.Book;
 import com.librarymanagement.book.model.User;
 import com.librarymanagement.book.repository.DummyLibraryDataStore;
+import com.librarymanagement.book.service.impl.UserService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {

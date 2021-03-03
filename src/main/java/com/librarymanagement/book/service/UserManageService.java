@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.librarymanagement.book.model.User;
 
 @Component
-public interface UserService {
+public interface UserManageService {
 
-	public User getUserDetails(String username) throws Exception;
+	public User updateUserDetails(String username, String bookname, String action);
 }

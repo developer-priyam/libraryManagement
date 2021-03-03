@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.librarymanagement.book.model.Book;
 import com.librarymanagement.book.model.User;
+import com.librarymanagement.book.service.BookManageService;
 import com.librarymanagement.book.service.BookService;
+import com.librarymanagement.book.service.UserManageService;
 import com.librarymanagement.book.service.UserService;
 
 @RestController
@@ -23,11 +24,17 @@ public class BookController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 	
-	@Autowired
+	private BookManageService bookManagerService;
+	private UserManageService userManagerService;
+	private UserService userService;
 	private BookService bookService;
 	
-	@Autowired
-	private UserService userService;
+	public BookController(BookManageService bookManagerService, BookService bookService, UserService userService, UserManageService userManagerService) {
+		this.bookService = bookService;
+		this.bookManagerService = bookManagerService;
+		this.userService = userService;
+		this.userManagerService = userManagerService;
+	}
 	
 	@GetMapping("/books")
 	public Collection<Book> getAllBooks() {
@@ -46,8 +53,8 @@ public class BookController {
 		User user = getUserDetailss(username);
 		if (user.getId() > 0) {
 			List<Integer> issuedBooks = user.getIssuedBooks();
-			bookService.borrowReturnBook(issuedBooks, bookname, action);
-			user = userService.updateUserDetails(username, bookname, action);
+			bookManagerService.borrowReturnBook(issuedBooks, bookname, action);
+			user = userManagerService.updateUserDetails(username, bookname, action);
 		}
 		return user;
 	}

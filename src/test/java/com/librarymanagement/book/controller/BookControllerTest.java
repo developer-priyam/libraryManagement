@@ -18,14 +18,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.librarymanagement.book.model.Book;
 import com.librarymanagement.book.model.User;
-import com.librarymanagement.book.service.BookService;
-import com.librarymanagement.book.service.UserService;
+import com.librarymanagement.book.service.BookManageService;
+import com.librarymanagement.book.service.impl.UserService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookControllerTest {
 
 	@Mock
-	private BookService bookService;
+	private BookManageService bookService;
 	
 	@Mock
 	private UserService userService;

@@ -33,7 +33,7 @@ public class BookServiceTest {
 	private DummyLibraryDataStore datastore;
 
 	@InjectMocks
-	private BookService bookService;
+	private BookManageService bookService;
 
 	private List<Integer> issuedBooks;
 	private List<Integer> issuedBooks1;
